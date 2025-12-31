@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nerovision"
+version = "0.0.1"
+authors = [
+  { name="Stephan Pirner", email="stephan.pirner93@gmail.com" },
+]
+description = "Nerovision, holds many different computer vision algorithms that I implemented, either because I needed them or I was curious."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+# license = "MIT"
+# license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/Pirner/nerovision"
+Issues = "https://github.com/Pirner/nerovision/issues"
