@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 import torch
 import torch.nn as nn
@@ -185,6 +185,7 @@ class CAE(nn.Module):
             latent_dim: int,
             n_channels=3,
             kernel_size=3,
+            return_latent=True,
     ) -> None:
         """
         constructor for CNNAutoencoder
@@ -203,6 +204,7 @@ class CAE(nn.Module):
         self.im_w = im_w
         self.im_h = im_h
         self.features = features
+        self.return_latent = return_latent
 
         if im_h % 32 != 0:
             raise ValueError('Image Height should be a multiple of 32')
@@ -225,43 +227,10 @@ class CAE(nn.Module):
         )
         self._decoder = decoder
 
-    def _build_decoder(self, features: List[int]) -> nn.Module:
-        """
-        build a convolutional network either for decoding
-        :param features: the features for the convolutional layers
-        :return:
-        """
-        layers = [nn.Linear(self.latent_dim, 256 * 8 * 8)]
-
-        for i, feat in enumerate(features):
-            pass
-
-        self.layers = nn.Sequential(
-            nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2),  # 16×16
-            ResidualBlock(128, 128),
-
-            nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2),  # 32×32
-            ResidualBlock(64, 64),
-
-            nn.ConvTranspose2d(64, 32, kernel_size=2, stride=2),  # 64×64
-            ResidualBlock(32, 32),
-
-            nn.ConvTranspose2d(32, 3, kernel_size=2, stride=2),  # 128×128
-            nn.Sigmoid()
-        )
-
-        decoder = nn.Sequential(*layers)
-        return decoder
-
-    def _build_ae(self):
-        """
-        builds the autoencoder for the convolutional auto encoder.
-        :return:
-        """
-        # self._build_encoder()
-        pass
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         encoded = self._encoder(x)  # latent dimensional vector representation
         decoded = self._decoder(encoded)
-        exit(0)
+        if self.return_latent:
+            return decoded, encoded
+        else:
+            return decoded
