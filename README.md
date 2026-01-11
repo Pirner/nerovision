@@ -1,6 +1,6 @@
 
 # nerovision
-![Project Logo](images/logo_small.png)
+![Project Logo](images/nerolith_logo_no_background.png)
 
 repository to collect my computer vision algorithms and make them reusable
 
