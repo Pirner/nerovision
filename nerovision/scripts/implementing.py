@@ -3,8 +3,6 @@ import glob
 
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-import numpy as np
-import torch
 from torch.utils.data import DataLoader
 
 from nerovision.nv_enums import ImageFormat
@@ -99,9 +97,6 @@ def main():
         val_loader=val_loader,
         callbacks=callbacks,
     )
-
-    empty_im = np.zeros((1, 3, im_h, im_w), dtype=np.float32)
-    empty_im = torch.tensor(empty_im)
     print('finished')
 
 

@@ -65,33 +65,6 @@ def main():
     plt.legend()
     plt.show()
 
-    exit(0)
-    # score good ones
-    for im_p in anomalous_paths:
-        im = NeroVisionIO.load_im_from_disk(im_p, ImageFormat.rgb)
-        preprocessed = preprocess_rgb_image(im, 224, 224)
-        preprocessed = preprocessed.transpose((2, 0, 1))
-        preprocessed = np.expand_dims(preprocessed, axis=0).astype(np.float32)
-        outputs = ort_sess.run(None, {'input': preprocessed})
-        recon = outputs[0][0]
-        latent_vector = outputs[1][0]
-
-        # detect anomaly score between original and current sample
-
-        recon = np.transpose(recon, (1, 2, 0))
-        recon = revert_normalization(recon)
-        recon = cv2.resize(recon, (im.shape[0], im.shape[1]))
-
-        cv2.imwrite("origin.png", im)
-        cv2.imwrite("recon.png", recon)
-        exit(0)
-
-    x, y = test_data[0][0], test_data[0][1]
-
-    # Print Result
-    predicted, actual = classes[outputs[0][0].argmax(0)], classes[y]
-    print(f'Predicted: "{predicted}", Actual: "{actual}"')
-
 
 if __name__ == '__main__':
     main()
