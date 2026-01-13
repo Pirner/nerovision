@@ -18,6 +18,9 @@ classifiers = [
 # license = "MIT"
 # license-files = ["LICEN[CS]E*"]
 
+[tool.setuptools]
+packages = ["nerovision"]
+
 [project.urls]
 Homepage = "https://github.com/Pirner/nerovision"
 Issues = "https://github.com/Pirner/nerovision/issues"
